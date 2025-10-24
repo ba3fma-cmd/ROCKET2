@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocket Casino | Crash</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="app">
+        <!-- Главный экран -->
+        <div id="mainScreen" class="screen active">
+            <div class="header">
+                <div class="balance-card">
+                    <div class="balance-info">
+                        <span class="balance-label">Баланс</span>
+                        <span id="balance" class="balance-amount">100.00 TON</span>
+                    </div>
+                    <div class="balance-actions">
+                        <button id="depositBtn" class="btn-icon">⬆️</button>
+                        <button id="withdrawBtn" class="btn-icon">⬇️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-container">
+                <div class="multiplier-display">
+                    <div id="currentMultiplier" class="current-multiplier">1.00x</div>
+                    <div class="multiplier-history">
+                        <div id="historyList" class="history-list">
+                            <div class="history-item">2.45x</div>
+                            <div class="history-item">1.23x</div>
+                            <div class="history-item">3.67x</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rocket-container">
+                    <canvas id="rocketCanvas" width="300" height="400"></canvas>
+                    <div id="crashPoint" class="crash-point hidden">Crash: <span id="crashValue">0.00x</span></div>
+                </div>
+
+                <div class="bet-controls">
+                    <div class="bet-input-group">
+                        <label>Ставка (TON)</label>
+                        <div class="input-with-buttons">
+                            <input type="number" id="betAmount" value="1.0" min="0.1" step="0.1">
+                            <div class="quick-buttons">
+                                <button class="quick-btn" data-action="half">½</button>
+                                <button class="quick-btn" data-action="double">2×</button>
+                                <button class="quick-btn" data-action="max">MAX</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rpt-settings">
+                        <label>RTP Factor: <span id="rptValue">95%</span></label>
+                        <input type="range" id="rptSlider" min="85" max="99" value="95" step="1">
+                    </div>
+
+                    <button id="placeBetBtn" class="btn-primary bet-btn">Сделать ставку</button>
+                    <button id="cashOutBtn" class="btn-success bet-btn hidden">Забрать <span id="cashOutMultiplier">1.00x</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран пополнения -->
+        <div id="depositScreen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" data-target="mainScreen">← Назад</button>
+                <h2>Пополнение баланса</h2>
+            </div>
+            
+            <div class="deposit-container">
+                <div class="input-group">
+                    <label>Сумма пополнения (TON)</label>
+                    <input type="number" id="depositAmount" value="10.0" min="1" step="0.1">
+                </div>
+                
+                <div class="quick-amounts">
+                    <button class="amount-btn" data-amount="10">10 TON</button>
+                    <button class="amount-btn" data-amount="50">50 TON</button>
+                    <button class="amount-btn" data-amount="100">100 TON</button>
+                </div>
+                
+                <button id="confirmDeposit" class="btn-primary">Пополнить</button>
+            </div>
+        </div>
+
+        <!-- Экран вывода -->
+        <div id="withdrawScreen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" data-target="mainScreen">← Назад</button>
+                <h2>Вывод средств</h2>
+            </div>
+            
+            <div class="withdraw-container">
+                <div class="input-group">
+                    <label>Сумма вывода (TON)</label>
+                    <input type="number" id="withdrawAmount" value="10.0" min="1" step="0.1">
+                    <div class="balance-info">Доступно: <span id="availableBalance">100.00</span> TON</div>
+                </div>
+                
+                <div class="quick-amounts">
+                    <button class="amount-btn" data-amount="10">10 TON</button>
+                    <button class="amount-btn" data-amount="50">50 TON</button>
+                    <button class="amount-btn" data-amount="100">100 TON</button>
+                </div>
+                
+                <button id="confirmWithdraw" class="btn-primary">Вывести</button>
+            </div>
+        </div>
+
+        <!-- Уведомления -->
+        <div id="notification" class="notification hidden"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
